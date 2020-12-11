@@ -31,12 +31,9 @@ char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
 IPAddress server(10, 0, 0, 113);
 int status = WL_IDLE_STATUS;
-WiFiSSLClient client;
-// Use arduinojson.org/v6/assistant to compute the capacity.
-StaticJsonDocument<38> doc;
+WiFiClient client;
 int curBuffer = 0;
 int maxBuffer = 100;
-char *json = new char[100];
 
 DFRobotDFPlayerMini myDFPlayer;
 // Declare our NeoPixel strip object:
@@ -121,63 +118,72 @@ void loop()
 {
   pirStat = digitalRead(PIR_PIN);
 #ifndef DEBUG
-  if (pirStat == HIGH && playing == 0) 
+  if (pirStat == HIGH && playing == 0)
 #else
   if (true)
 #endif
   {
     // if you get a connection, report back via serial:
-    if (client.connect(server, 443))
+    if (client.connect(server, 5000))
     {
       Serial.println("connected to server");
       // Make a HTTP request:
-      client.println("GET /Query HTTP/1.1");
+      client.println("GET /Query HTTP/1.0");
       client.println("Host: TreeTopService");
       client.println("Connection: close");
-      client.println();
-
-      curBuffer = 0;
-      while (true)
-      {
-        while (client.available())
-        {
-          char c = client.read();
-          json[curBuffer] = c;
-          curBuffer++;
-          Serial.write(c);
-        }
-        if (!client.connected())
-        {
-          Serial.println();
-          Serial.println("disconnecting from server.");
-          client.stop();
-          break;
-        }
+      if (client.println() == 0) {
+        Serial.println(F("Failed to send request"));
+        delay(5000);
+        return;
       }
-      json[curBuffer] = '\0';
-      curBuffer++;
-      DeserializationError error = deserializeJson(doc, json);
 
+      char status[32] = {0};
+      client.readBytesUntil('\r', status, sizeof(status));
+      if (strcmp(status, "HTTP/1.1 200 OK") != 0) {
+        Serial.print(F("Unexpected response: "));
+        Serial.println(status);
+        delay(5000);
+        return;
+      }
+
+      // Skip HTTP headers
+      char endOfHeaders[] = "\r\n\r\n";
+      if (!client.find(endOfHeaders)) {
+        Serial.println(F("Invalid response"));
+        delay(5000);
+        return;
+      }
+
+      // Use arduinojson.org/v6/assistant to compute the capacity.
+      DynamicJsonDocument doc(55);
+      DeserializationError error = deserializeJson(doc, client);
       // Test if parsing succeeds.
       if (error)
       {
         Serial.print(F("deserializeJson() failed: "));
         Serial.println(error.f_str());
+        delay(5000);
         //cleanup
         return;
       }
 
       long standByMillis = doc["standByMillis"];
       int danceId = doc["danceId"];
+      Serial.println(F("Response:"));
+      Serial.println(standByMillis);
+      Serial.println(danceId);
 
-      if (standByMillis == 0)
-      {
-        delay(standByMillis);
-      }
-      else if (danceId > 0)
+      if (danceId > 0)
       {
         dance(danceId);
-        delay(5 * 60 * 1000); //wait 5 minutes before triggering again
+      }
+
+      if (standByMillis > 0)
+      {
+#ifdef DEBUG
+        standByMillis = 500;
+#endif
+        delay(standByMillis);
       }
     }
   }
@@ -188,14 +194,14 @@ void dance(int danceId)
   playing = 1;
   switch (danceId)
   {
-  case 1:
-    starman();
-    break;
-  case 2:
-    kart();
-    break;
-  default:
-    break;
+    case 1:
+      starman();
+      break;
+    case 2:
+      kart();
+      break;
+    default:
+      break;
   }
   dormant();
   playing = 0;
@@ -279,25 +285,25 @@ void starman()
     };
   */
   myDFPlayer.play(1);
-  uint32_t colors[]{
-      //  strip.Color(228, 92, 16), // #e45c10
-      //  strip.Color(248, 56, 0),  // #f83800
-      //  strip.Color(140, 16, 0)   //#8c1000
+  uint32_t colors[] {
+    //  strip.Color(228, 92, 16), // #e45c10
+    //  strip.Color(248, 56, 0),  // #f83800
+    //  strip.Color(140, 16, 0)   //#8c1000
 
-      strip.Color(136, 112, 0), //887000
-      strip.Color(216, 40, 0),  //d82800
+    strip.Color(136, 112, 0), //887000
+    strip.Color(216, 40, 0),  //d82800
 
-      strip.Color(200, 76, 12), //c84c0c
-      strip.Color(0, 0, 0),     //000000
+    strip.Color(200, 76, 12), //c84c0c
+    strip.Color(0, 0, 0),     //000000
 
-      strip.Color(216, 40, 0),    //d82800
-      strip.Color(252, 216, 168), //fcd8a8
+    strip.Color(216, 40, 0),    //d82800
+    strip.Color(252, 216, 168), //fcd8a8
 
-      strip.Color(252, 152, 56), //fc9838
-      strip.Color(0, 168, 0),    //00a800
+    strip.Color(252, 152, 56), //fc9838
+    strip.Color(0, 168, 0),    //00a800
 
-      strip.Color(252, 152, 56), //fc9838
-      strip.Color(216, 40, 0)    //d82800
+    strip.Color(252, 152, 56), //fc9838
+    strip.Color(216, 40, 0)    //d82800
   };
   for (int c = 0; c < 13; c++)
   {
@@ -317,10 +323,10 @@ void starman()
 void kart()
 {
   myDFPlayer.play(2);
-  uint32_t colors[]{
-      strip.Color(255, 0, 0),   //R
-      strip.Color(237, 109, 0), //O
-      strip.Color(0, 255, 255)  //G
+  uint32_t colors[] {
+    strip.Color(255, 0, 0),   //R
+    strip.Color(237, 109, 0), //O
+    strip.Color(0, 255, 0)  //G
   };
   for (int c = 0; c < 3; c++)
   {
@@ -329,7 +335,7 @@ void kart()
       strip.setPixelColor(i, colors[c]);
     }
     strip.show();
-    delay(1000);
+    delay(1200);
   }
   delay(2000);
 }
