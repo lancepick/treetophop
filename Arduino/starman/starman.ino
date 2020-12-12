@@ -155,7 +155,7 @@ void loop()
       }
 
       // Use arduinojson.org/v6/assistant to compute the capacity.
-      DynamicJsonDocument doc(55);
+      DynamicJsonDocument doc(5000);
       DeserializationError error = deserializeJson(doc, client);
       // Test if parsing succeeds.
       if (error)
@@ -168,14 +168,15 @@ void loop()
       }
 
       long standByMillis = doc["standByMillis"];
-      int danceId = doc["danceId"];
+      int track = doc["tack"];
+      long steps[] = doc["steps"];
       Serial.println(F("Response:"));
       Serial.println(standByMillis);
-      Serial.println(danceId);
+      Serial.println(track);
 
-      if (danceId > 0)
+      if (track >= 0)
       {
-        dance(danceId);
+        dance(track, steps);
       }
 
       if (standByMillis > 0)
@@ -189,23 +190,23 @@ void loop()
   }
 }
 
-void dance(int danceId)
-{
-  playing = 1;
-  switch (danceId)
-  {
-    case 1:
-      starman();
-      break;
-    case 2:
-      kart();
-      break;
-    default:
-      break;
-  }
-  dormant();
-  playing = 0;
-}
+// void dance(int danceId)
+// {
+//   playing = 1;
+//   switch (danceId)
+//   {
+//     case 1:
+//       starman();
+//       break;
+//     case 2:
+//       kart();
+//       break;
+//     default:
+//       break;
+//   }
+//   dormant();
+//   playing = 0;
+// }
 
 void printWiFiStatus()
 {
@@ -254,88 +255,121 @@ void dormant()
   }
 }
 
-void starman()
-{
-  /*
-    uint32_t colors[]{
-    strip.Color(255,160,180),// #ffa044
-    strip.Color(228,92,16),// #e45c10
-    strip.Color(248,56,0),// #f83800
-    strip.Color(140,16,0)//#8c1000
-    strip.Color(240,208,176),// #f0d0b0
-    strip.Color(172,124,0),// #ac7c00
-    strip.Color(254,139,54),// #fe8b36
-    strip.Color(255,224,168),// #ffe0a8
-    strip.Color(240,208,176)// #f0d0b0
+// void starman()
+// {
+//   /*
+//     uint32_t colors[]{
+//     strip.Color(255,160,180),// #ffa044
+//     strip.Color(228,92,16),// #e45c10
+//     strip.Color(248,56,0),// #f83800
+//     strip.Color(140,16,0)//#8c1000
+//     strip.Color(240,208,176),// #f0d0b0
+//     strip.Color(172,124,0),// #ac7c00
+//     strip.Color(254,139,54),// #fe8b36
+//     strip.Color(255,224,168),// #ffe0a8
+//     strip.Color(240,208,176)// #f0d0b0
 
-    strip.Color(136,112,0),//887000
-    strip.Color(216,40,0),//d82800
+//     strip.Color(136,112,0),//887000
+//     strip.Color(216,40,0),//d82800
 
-    strip.Color(200,76,12),//c84c0c
-    strip.Color(0,0,0),//000000
+//     strip.Color(200,76,12),//c84c0c
+//     strip.Color(0,0,0),//000000
 
-    strip.Color(216,40,0),//d82800
-    strip.Color(252,216,168),//fcd8a8
+//     strip.Color(216,40,0),//d82800
+//     strip.Color(252,216,168),//fcd8a8
 
-    strip.Color(252,152,56),//fc9838
-    strip.Color(0,168,0),//00a800--53-59
+//     strip.Color(252,152,56),//fc9838
+//     strip.Color(0,168,0),//00a800--53-59
 
-    strip.Color(252,152,56),//fc9838
-    strip.Color(216,40,0),//d82800
-    };
-  */
-  myDFPlayer.play(1);
-  uint32_t colors[] {
-    //  strip.Color(228, 92, 16), // #e45c10
-    //  strip.Color(248, 56, 0),  // #f83800
-    //  strip.Color(140, 16, 0)   //#8c1000
+//     strip.Color(252,152,56),//fc9838
+//     strip.Color(216,40,0),//d82800
+//     };
+//   */
+//   myDFPlayer.play(1);
+//   uint32_t colors[] {
+//     //  strip.Color(228, 92, 16), // #e45c10
+//     //  strip.Color(248, 56, 0),  // #f83800
+//     //  strip.Color(140, 16, 0)   //#8c1000
 
-    strip.Color(136, 112, 0), //887000
-    strip.Color(216, 40, 0),  //d82800
+//     strip.Color(136, 112, 0), //887000
+//     strip.Color(216, 40, 0),  //d82800
 
-    strip.Color(200, 76, 12), //c84c0c
-    strip.Color(0, 0, 0),     //000000
+//     strip.Color(200, 76, 12), //c84c0c
+//     strip.Color(0, 0, 0),     //000000
 
-    strip.Color(216, 40, 0),    //d82800
-    strip.Color(252, 216, 168), //fcd8a8
+//     strip.Color(216, 40, 0),    //d82800
+//     strip.Color(252, 216, 168), //fcd8a8
 
-    strip.Color(252, 152, 56), //fc9838
-    strip.Color(0, 168, 0),    //00a800
+//     strip.Color(252, 152, 56), //fc9838
+//     strip.Color(0, 168, 0),    //00a800
 
-    strip.Color(252, 152, 56), //fc9838
-    strip.Color(216, 40, 0)    //d82800
-  };
-  for (int c = 0; c < 13; c++)
-  {
-    //int rand = random(0,8);
-    for (int j = 0; j < 10; j++)
-    {
-      for (int i = 0; i < LED_COUNT; i++)
-      {
-        strip.setPixelColor(i, colors[j]);
+//     strip.Color(252, 152, 56), //fc9838
+//     strip.Color(216, 40, 0)    //d82800
+//   };
+//   for (int c = 0; c < 13; c++)
+//   {
+//     //int rand = random(0,8);
+//     for (int j = 0; j < 10; j++)
+//     {
+//       for (int i = 0; i < LED_COUNT; i++)
+//       {
+//         strip.setPixelColor(i, colors[j]);
+//       }
+//       strip.show();
+//       delay(50);
+//     }
+//   }
+// }
+
+// void kart()
+// {
+//   myDFPlayer.play(2);
+//   uint32_t colors[] {
+//     strip.Color(255, 0, 0),   //R
+//     strip.Color(237, 109, 0), //O
+//     strip.Color(0, 255, 0)  //G
+//   };
+//   for (int c = 0; c < 3; c++)
+//   {
+//     for (int i = 0; i < LED_COUNT; i++)
+//     {
+//       strip.setPixelColor(i, colors[c]);
+//     }
+//     strip.show();
+//     delay(1200);
+//   }
+//   delay(2000);
+// }
+void dance(int track, long steps[]){
+   playing = 1;
+ if(track>0){
+    myDFPlayer.play(track);
+  }
+  for(int i = 0; i < len(steps); i++){
+    bool all = steps[i] < 0;
+    long x = all ? steps[i] * -1 : steps[i];
+    int p = (x / 1000000000000000);
+    int r = (x / 1000000000000) - p*1000;
+    int g = (x / 1000000000)    - p*1000000          - r * 1000;
+    int b = (x / 1000000)       - p*1000000000       - r * 1000000       - g * 1000;
+    int w = (x / 10)            - p*100000000000000  - r * 100000000000  - g * 100000000    - b*100000;
+    int s =  x                  - p*1000000000000000 - r * 1000000000000 - g * 1000000000   - b*1000000 - w*10;    
+    uint32_t color = strip.Color(r,g,b);
+    if(all == 1){
+      for(int c = 0; c< LED_COUNT; c++){
+        strip.setPixelColor(c, color);
       }
-      strip.show();
-      delay(50);
     }
-  }
-}
-
-void kart()
-{
-  myDFPlayer.play(2);
-  uint32_t colors[] {
-    strip.Color(255, 0, 0),   //R
-    strip.Color(237, 109, 0), //O
-    strip.Color(0, 255, 0)  //G
-  };
-  for (int c = 0; c < 3; c++)
-  {
-    for (int i = 0; i < LED_COUNT; i++)
-    {
-      strip.setPixelColor(i, colors[c]);
+    else{
+      strip.setPixelColor(p, color);
     }
-    strip.show();
-    delay(1200);
+      if(s == 1){
+        strip.show();
+      }
+      if(w>0){
+        delay(w);
+      }
   }
-  delay(2000);
+  dormant();
+   playing = 0;
 }

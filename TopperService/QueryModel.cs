@@ -6,7 +6,7 @@ namespace TopperService
 
         public int Track { get; set; }
         
-        public IEnumerable<long> Steps {get;set;}
+        public string Steps {get;set;}
 
     }
 }

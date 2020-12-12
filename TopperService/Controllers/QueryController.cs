@@ -25,12 +25,17 @@ namespace TopperService.Controllers
             {
                 using (var conn = new SqlConnection(_config.GetConnectionString("default")))
                 {
-                    ret = await conn.QuerySingleAsync<ResponseModel>("ResponseGet");
+                    var q = await conn.QuerySingleAsync<QueryModel>("ResponseGet");
+                    ret = new ResponseModel {
+                        StandByMillis = q.StandByMillis,
+                        Track = q.Track,
+                        Steps = q.Steps.split(',')
+                    };
                 }
             }
             catch
             {
-                ret = new ResponseModel { StandByMillis = 5000, DanceId = -1 };
+                ret = new ResponseModel { StandByMillis = 5000, Track = -1, Steps = new  };
             }
             return ret;
         }
