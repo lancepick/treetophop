@@ -1,3 +1,5 @@
+#define ARDUINOJSON_USE_LONG_LONG 1
+//#define ARDUINOJSON_USE_INT64 1
 #include <WiFiNINA.h>
 #include "arduino_secrets.h"
 #include <ArduinoJson.h>
@@ -190,49 +192,22 @@ void loop()
   }
 }
 
-// void dance(int danceId)
-// {
-//   playing = 1;
-//   switch (danceId)
-//   {
-//     case 1:
-//       starman();
-//       break;
-//     case 2:
-//       kart();
-//       break;
-//     default:
-//       break;
-//   }
-//   dormant();
-//   playing = 0;
-// }
-
 void printWiFiStatus()
 {
 
   // print the SSID of the network you're attached to:
-
   Serial.print("SSID: ");
-
   Serial.println(WiFi.SSID());
 
   // print your board's IP address:
-
   IPAddress ip = WiFi.localIP();
-
   Serial.print("IP Address: ");
-
   Serial.println(ip);
 
   // print the received signal strength:
-
   long rssi = WiFi.RSSI();
-
   Serial.print("signal strength (RSSI):");
-
   Serial.print(rssi);
-
   Serial.println(" dBm");
 }
 
@@ -255,100 +230,16 @@ void dormant()
   }
 }
 
-// void starman()
-// {
-//   /*
-//     uint32_t colors[]{
-//     strip.Color(255,160,180),// #ffa044
-//     strip.Color(228,92,16),// #e45c10
-//     strip.Color(248,56,0),// #f83800
-//     strip.Color(140,16,0)//#8c1000
-//     strip.Color(240,208,176),// #f0d0b0
-//     strip.Color(172,124,0),// #ac7c00
-//     strip.Color(254,139,54),// #fe8b36
-//     strip.Color(255,224,168),// #ffe0a8
-//     strip.Color(240,208,176)// #f0d0b0
-
-//     strip.Color(136,112,0),//887000
-//     strip.Color(216,40,0),//d82800
-
-//     strip.Color(200,76,12),//c84c0c
-//     strip.Color(0,0,0),//000000
-
-//     strip.Color(216,40,0),//d82800
-//     strip.Color(252,216,168),//fcd8a8
-
-//     strip.Color(252,152,56),//fc9838
-//     strip.Color(0,168,0),//00a800--53-59
-
-//     strip.Color(252,152,56),//fc9838
-//     strip.Color(216,40,0),//d82800
-//     };
-//   */
-//   myDFPlayer.play(1);
-//   uint32_t colors[] {
-//     //  strip.Color(228, 92, 16), // #e45c10
-//     //  strip.Color(248, 56, 0),  // #f83800
-//     //  strip.Color(140, 16, 0)   //#8c1000
-
-//     strip.Color(136, 112, 0), //887000
-//     strip.Color(216, 40, 0),  //d82800
-
-//     strip.Color(200, 76, 12), //c84c0c
-//     strip.Color(0, 0, 0),     //000000
-
-//     strip.Color(216, 40, 0),    //d82800
-//     strip.Color(252, 216, 168), //fcd8a8
-
-//     strip.Color(252, 152, 56), //fc9838
-//     strip.Color(0, 168, 0),    //00a800
-
-//     strip.Color(252, 152, 56), //fc9838
-//     strip.Color(216, 40, 0)    //d82800
-//   };
-//   for (int c = 0; c < 13; c++)
-//   {
-//     //int rand = random(0,8);
-//     for (int j = 0; j < 10; j++)
-//     {
-//       for (int i = 0; i < LED_COUNT; i++)
-//       {
-//         strip.setPixelColor(i, colors[j]);
-//       }
-//       strip.show();
-//       delay(50);
-//     }
-//   }
-// }
-
-// void kart()
-// {
-//   myDFPlayer.play(2);
-//   uint32_t colors[] {
-//     strip.Color(255, 0, 0),   //R
-//     strip.Color(237, 109, 0), //O
-//     strip.Color(0, 255, 0)  //G
-//   };
-//   for (int c = 0; c < 3; c++)
-//   {
-//     for (int i = 0; i < LED_COUNT; i++)
-//     {
-//       strip.setPixelColor(i, colors[c]);
-//     }
-//     strip.show();
-//     delay(1200);
-//   }
-//   delay(2000);
-// }
 void dance(int track, JsonArray steps) {
   playing = 1;
   if (track > 0) {
     myDFPlayer.play(track);
   }
   for (JsonVariant stp : steps) {
-    long x = stp.as<long>();
-    Serial.println(x);
-    bool all = stp < 0;
+    //Serial.println(stp.as<signed __int64>());
+    long long x = stp.as<signed long long>();
+
+    bool all = x < 0;
     x = all ? x * -1 : x;
     int p = (x / 1000000000000000);
     int r = (x / 1000000000000) - p * 1000;
@@ -356,19 +247,37 @@ void dance(int track, JsonArray steps) {
     int b = (x / 1000000)       - p * 1000000000       - r * 1000000       - g * 1000;
     int w = (x / 10)            - p * 100000000000000  - r * 100000000000  - g * 100000000    - b * 100000;
     int s =  x                  - p * 1000000000000000 - r * 1000000000000 - g * 1000000000   - b * 1000000 - w * 10;
+    Serial.print("p:");
+    Serial.println(p);
+    Serial.print("r:");
+    Serial.println(r);
+    Serial.print("g:");
+    Serial.println(g);
+    Serial.print("b:");
+    Serial.println(b);
+    Serial.print("w:");
+    Serial.println(w);
+    Serial.print("s:");
+    Serial.println(s);
     uint32_t color = strip.Color(r, g, b);
     if (all == 1) {
+      Serial.print("ALL");
       for (int c = 0; c < LED_COUNT; c++) {
         strip.setPixelColor(c, color);
       }
     }
     else {
+      Serial.print("SINGLE");
       strip.setPixelColor(p, color);
     }
+
     if (s == 1) {
+      Serial.print("SHOW");
       strip.show();
     }
     if (w > 0) {
+      Serial.print("WAIT:");
+      Serial.println(w);
       delay(w);
     }
   }

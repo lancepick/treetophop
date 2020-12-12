@@ -75,6 +75,126 @@ BEGIN
     SELECT d.Starman,  8,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
     SELECT d.Starman,  9,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
     SELECT d.Starman, 10,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 11,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 12,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 13,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 14,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 15,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 16,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 17,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 18,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 19,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 20,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 21,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 22,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 23,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 24,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 25,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 26,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 27,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 28,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 29,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 30,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 31,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 32,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 33,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 34,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 35,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 36,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 37,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 38,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 39,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 40,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 41,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 42,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 43,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 44,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 45,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 46,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 47,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 48,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 49,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 50,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 51,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 52,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 53,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 54,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 55,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 56,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 57,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 58,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 59,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 60,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 61,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 62,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 63,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 64,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 65,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 66,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 67,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 68,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 69,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 70,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 71,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 72,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 73,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 74,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 75,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 76,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 77,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 78,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 79,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 80,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 81,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 82,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 83,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 84,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 85,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 86,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 87,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 88,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 89,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 90,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 91,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 92,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 93,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 94,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 95,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 96,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 97,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 98,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 99,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 100,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 101,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 102,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 103,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 104,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 105,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 106,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 107,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 108,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 109,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 110,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 111,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 112,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 113,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 114,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 115,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 116,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 117,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 118,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 119,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 120,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 121,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 122,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 123,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 124,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 125,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 126,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 127,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 128,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 129,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 130,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
     SELECT d.Kart,     1,  -1, 255,  0,  0, 1200, 1 FROM const.Dance AS d UNION
     SELECT d.Kart,     2,  -1, 237,109,  0, 1200, 1 FROM const.Dance AS d UNION
     SELECT d.Kart,     3,  -1,   0,255,  0, 1200, 1 FROM const.Dance AS d 
