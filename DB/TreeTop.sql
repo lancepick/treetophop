@@ -52,26 +52,6 @@ AS
         CONVERT(INT, 1) AS Starman,
         CONVERT(INT, 2) AS Kart
 GO
-IF NOT EXISTS (SELECT 1 FROM dbo.DanceStep)
-BEGIN
-    --SQL Prompt Formatting Off
-    INSERT dbo.DanceStep (DanceId, StepOrder, Pixel, R, G, B, Wait, Show)
-    SELECT d.Starman, 1,  -1, 136,112,0,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 2,  -1, 216,40,0,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 3,  -1, 200,76,12,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 4,  -1, 0,0,0,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 5,  -1, 216,40,0,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 6,  -1, 252,216,168,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 7,  -1, 252,152,56,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 8,  -1, 0,168,0,1,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 9,  -1, 252,152,56,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Starman, 10, -1, 216,40,0,50 ,1 FROM const.Dance AS d UNION
-    SELECT d.Kart, 1, -1, 255,0,0,1200,1 FROM const.Dance AS d UNION
-    SELECT d.Kart, 2, -1, 237,109,0,1200,1 FROM const.Dance AS d UNION
-    SELECT d.Kart, 3, -1, 0,255,0,1200,1 FROM const.Dance AS d 
-    --SQL Prompt Formatting On
-END
-GO
 SET IDENTITY_INSERT dbo.Dance ON
     --SQL Prompt Formatting Off
     INSERT dbo.Dance (DanceId, Name, Track)
@@ -80,7 +60,26 @@ SET IDENTITY_INSERT dbo.Dance ON
     SELECT d.Kart, 'Kart', 2 FROM const.Dance AS d
     --SQL Prompt Formatting On`
 SET IDENTITY_INSERT dbo.Dance OFF
-
+GO
+IF NOT EXISTS (SELECT 1 FROM dbo.DanceStep)
+BEGIN
+    --SQL Prompt Formatting Off
+    INSERT dbo.DanceStep (DanceId, StepOrder, Pixel, R, G, B, Wait, Show)
+    SELECT d.Starman,  1,  -1, 136,112,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  2,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  3,  -1, 200, 76, 12,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  4,  -1,   0,  0,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  5,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  6,  -1, 252,216,168,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  7,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  8,  -1,   0,168,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman,  9,  -1, 252,152, 56,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Starman, 10,  -1, 216, 40,  0,   50, 1 FROM const.Dance AS d UNION
+    SELECT d.Kart,     1,  -1, 255,  0,  0, 1200, 1 FROM const.Dance AS d UNION
+    SELECT d.Kart,     2,  -1, 237,109,  0, 1200, 1 FROM const.Dance AS d UNION
+    SELECT d.Kart,     3,  -1,   0,255,  0, 1200, 1 FROM const.Dance AS d 
+    --SQL Prompt Formatting On
+END
 GO
 CREATE OR ALTER PROCEDURE dbo.ResponseGet
 AS
@@ -122,19 +121,15 @@ BEGIN
     SELECT
         @StandByMillis AS StandByMillis,
         d.Track AS Track,
-        STRING_AGG(CONVERT(VARCHAR(MAX), 
-            ds.Pixel * 1000000000000000 + 
-            ds.R * 1000000000000 + 
-            ds.G * 1000000000 + 
-            ds.B * 1000000 + 
-            ds.Wait * 10 + 
-            ds.Show), ',')WITHIN GROUP(ORDER BY ds.StepOrder) AS Steps
+        STRING_AGG(CONVERT(VARCHAR(MAX), CONCAT(ds.Pixel, FORMAT(ds.R, '000'), FORMAT(ds.G, '000'), FORMAT(ds.B, '000'), FORMAT(ds.Wait, '00000'), ds.Show)), ',')WITHIN GROUP(ORDER BY ds.StepOrder) AS Steps
     FROM
         dbo.Dance AS d
         LEFT JOIN dbo.DanceStep AS ds
             ON ds.DanceId = d.DanceId
     WHERE
         d.DanceId = @DanceId
+	GROUP BY
+		d.Track
     --SQL Prompt Formatting On
 END
 GO

@@ -1,6 +1,6 @@
 namespace TopperService
 {
-    public class ResponseModel
+    public class QueryModel
     {
         public long StandByMillis { get; set; }
 

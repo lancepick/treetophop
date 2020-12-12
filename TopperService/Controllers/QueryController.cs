@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data.SqlClient;
-using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace TopperService.Controllers
 {
@@ -29,13 +30,13 @@ namespace TopperService.Controllers
                     ret = new ResponseModel {
                         StandByMillis = q.StandByMillis,
                         Track = q.Track,
-                        Steps = q.Steps.split(',')
+                        Steps = q.Steps.Split(',').Select(s=>long.Parse(s))
                     };
                 }
             }
             catch
             {
-                ret = new ResponseModel { StandByMillis = 5000, Track = -1, Steps = new  };
+                ret = new ResponseModel { StandByMillis = 5000, Track = -1, Steps = new List<long>() };
             }
             return ret;
         }

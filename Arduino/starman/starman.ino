@@ -168,8 +168,8 @@ void loop()
       }
 
       long standByMillis = doc["standByMillis"];
-      int track = doc["tack"];
-      long steps[] = doc["steps"];
+      int track = doc["track"];
+      JsonArray steps = doc["steps"].as<JsonArray>();
       Serial.println(F("Response:"));
       Serial.println(standByMillis);
       Serial.println(track);
@@ -340,36 +340,38 @@ void dormant()
 //   }
 //   delay(2000);
 // }
-void dance(int track, long steps[]){
-   playing = 1;
- if(track>0){
+void dance(int track, JsonArray steps) {
+  playing = 1;
+  if (track > 0) {
     myDFPlayer.play(track);
   }
-  for(int i = 0; i < len(steps); i++){
-    bool all = steps[i] < 0;
-    long x = all ? steps[i] * -1 : steps[i];
+  for (JsonVariant stp : steps) {
+    long x = stp.as<long>();
+    Serial.println(x);
+    bool all = stp < 0;
+    x = all ? x * -1 : x;
     int p = (x / 1000000000000000);
-    int r = (x / 1000000000000) - p*1000;
-    int g = (x / 1000000000)    - p*1000000          - r * 1000;
-    int b = (x / 1000000)       - p*1000000000       - r * 1000000       - g * 1000;
-    int w = (x / 10)            - p*100000000000000  - r * 100000000000  - g * 100000000    - b*100000;
-    int s =  x                  - p*1000000000000000 - r * 1000000000000 - g * 1000000000   - b*1000000 - w*10;    
-    uint32_t color = strip.Color(r,g,b);
-    if(all == 1){
-      for(int c = 0; c< LED_COUNT; c++){
+    int r = (x / 1000000000000) - p * 1000;
+    int g = (x / 1000000000)    - p * 1000000          - r * 1000;
+    int b = (x / 1000000)       - p * 1000000000       - r * 1000000       - g * 1000;
+    int w = (x / 10)            - p * 100000000000000  - r * 100000000000  - g * 100000000    - b * 100000;
+    int s =  x                  - p * 1000000000000000 - r * 1000000000000 - g * 1000000000   - b * 1000000 - w * 10;
+    uint32_t color = strip.Color(r, g, b);
+    if (all == 1) {
+      for (int c = 0; c < LED_COUNT; c++) {
         strip.setPixelColor(c, color);
       }
     }
-    else{
+    else {
       strip.setPixelColor(p, color);
     }
-      if(s == 1){
-        strip.show();
-      }
-      if(w>0){
-        delay(w);
-      }
+    if (s == 1) {
+      strip.show();
+    }
+    if (w > 0) {
+      delay(w);
+    }
   }
   dormant();
-   playing = 0;
+  playing = 0;
 }
