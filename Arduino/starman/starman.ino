@@ -24,7 +24,8 @@
 
 #define LED_PIN 7
 #define PIR_PIN 6
-#define LED_COUNT 66
+#define LED_COUNT 68
+#define OFFSET 2
 
 int pirStat = 0;
 int playing = 0;
@@ -61,13 +62,12 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(PIR_PIN, INPUT);
 
-  blink(1000);
+  blink(1000); 
   blink(1000);
   blink(1000);
   Serial1.begin(9600);
   Serial.begin(9600);
   dormant();
-#ifndef DEBUG
   while (!Serial1)
   {
     blink(2000);
@@ -80,7 +80,6 @@ void setup()
     }
   }
   myDFPlayer.volume(30);
-#endif
   // check for the WiFi module:
 
   if (WiFi.status() == WL_NO_MODULE)
@@ -139,7 +138,7 @@ void loop()
         return;
       }
 
-      char status[32] = {0};
+      char status[50] = {0};
       client.readBytesUntil('\r', status, sizeof(status));
       if (strcmp(status, "HTTP/1.1 200 OK") != 0) {
         Serial.print(F("Unexpected response: "));
@@ -223,7 +222,7 @@ void dormant()
 {
   //uint32_t color = strip.Color(255,160,180);// #ffa044
   uint32_t color = strip.Color(228, 92, 16); // #e45c10
-  for (int i = 0; i < LED_COUNT; i++)
+  for (int i = (0 + OFFSET); i < LED_COUNT; i++)
   {
     strip.setPixelColor(i, color);
     strip.show();
@@ -242,27 +241,28 @@ void dance(int track, JsonArray steps) {
     bool all = x < 0;
     x = all ? x * -1 : x;
     int p = (x / 1000000000000000);
+    p += OFFSET;
     int r = (x / 1000000000000) - p * 1000;
     int g = (x / 1000000000)    - p * 1000000          - r * 1000;
     int b = (x / 1000000)       - p * 1000000000       - r * 1000000       - g * 1000;
     int w = (x / 10)            - p * 100000000000000  - r * 100000000000  - g * 100000000    - b * 100000;
     int s =  x                  - p * 1000000000000000 - r * 1000000000000 - g * 1000000000   - b * 1000000 - w * 10;
-    Serial.print("p:");
-    Serial.println(p);
-    Serial.print("r:");
-    Serial.println(r);
-    Serial.print("g:");
-    Serial.println(g);
-    Serial.print("b:");
-    Serial.println(b);
-    Serial.print("w:");
-    Serial.println(w);
-    Serial.print("s:");
-    Serial.println(s);
+//    Serial.print("p:");
+//    Serial.println(p);
+//    Serial.print("r:");
+//    Serial.println(r);
+//    Serial.print("g:");
+//    Serial.println(g);
+//    Serial.print("b:");
+//    Serial.println(b);
+//    Serial.print("w:");
+//    Serial.println(w);
+//    Serial.print("s:");
+//    Serial.println(s);
     uint32_t color = strip.Color(r, g, b);
     if (all == 1) {
       Serial.print("ALL");
-      for (int c = 0; c < LED_COUNT; c++) {
+      for (int c = (0 + OFFSET); c < LED_COUNT; c++) {
         strip.setPixelColor(c, color);
       }
     }
